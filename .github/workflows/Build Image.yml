@@ -1,5 +1,7 @@
 name: Build arm64v8 Image
-on: push
+on:
+  release:
+    types: [published]
 jobs:
   build:
       runs-on: ubuntu-latest
