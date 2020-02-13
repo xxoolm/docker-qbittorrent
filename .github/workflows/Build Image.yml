@@ -1,4 +1,4 @@
-name: Build Amd64 Image
+name: Build arm64v8 Image
 on: push
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
             with:
               publish: true
               imageName: superng6/qbittorrent
-              platform: linux/amd64
-              tag: latest
+              platform: linux/arm64
+              tag: arm64v8-latest
               dockerHubUser: ${{ secrets.DOCKER_USERNAME }}
               dockerHubPassword: ${{ secrets.DOCKER_PASSWORD }}

@@ -1,6 +1,5 @@
-FROM debian:buster-slim as compiling
-
-# compiling qB
+FROM debian:buster-slim as confimage
+# download s6 & qbittorrent
 # set version label
 ARG LIBTORRENT_VER=_1_2
 ARG QBITTORRENT_VER=4.2.1
@@ -14,11 +13,11 @@ LABEL maintainer="SuperNG6"
 RUN apt-get -y update \
 &&	apt-get install -y wget \
 &&	mkdir -p /qbittorrent/usr/local/bin \
-&&	wget --no-check-certificate -O /qbittorrent/usr/local/bin/qbittorrent-nox https://git.io/JvLcC \
+&&	wget --no-check-certificate -O /qbittorrent/usr/local/bin/qbittorrent-nox https://git.io/JvLcW \
 # download s6
 &&	mkdir /s6 \
-&&	wget --no-check-certificate https://github.com/just-containers/s6-overlay/releases/download/v${S6_VER}/s6-overlay-amd64.tar.gz \
-&&	tar -xvzf s6-overlay-amd64.tar.gz -C /s6
+&&	wget --no-check-certificate https://github.com/just-containers/s6-overlay/releases/download/v${S6_VER}/s6-overlay-aarch64.tar.gz \
+&&	tar -xvzf s6-overlay-aarch64.tar.gz -C /s6
 
 
 # docker qBittorrent
@@ -30,8 +29,8 @@ ENV WEBUIPORT=8080
 
 # add local files and install qbitorrent s6
 COPY root /
-COPY --from=compiling  /qbittorrent  /
-COPY --from=compiling  /s6 /
+COPY --from=confimage  /qbittorrent  /
+COPY --from=confimage  /s6 /
 
 # install python3
 RUN	apt-get -y update \
