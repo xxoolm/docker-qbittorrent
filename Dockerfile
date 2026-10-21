@@ -1,4 +1,4 @@
-FROM lsiobase/alpine:3.12 as builder
+FROM superng6/alpine:3.21 AS builder
 LABEL maintainer="SuperNG6"
 
 WORKDIR /qbittorrent
@@ -11,12 +11,13 @@ RUN set -ex \
 	&& /qbittorrent/install.sh
 
 # docker qBittorrent
-FROM lsiobase/alpine:3.12
+FROM superng6/alpine:3.21
 
 # environment settings
 ENV TZ=Asia/Shanghai \
     WEBUI_PORT=8080 \
-    PUID=1026 PGID=100 \
+    PUID=1026 PGID=100 UMASK_SET=022\
+    TL=https://githubraw.sleele.workers.dev/XIU2/TrackersListCollection/master/best.txt \
     UT=true
 
 # add local files and install qbitorrent

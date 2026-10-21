@@ -3,20 +3,20 @@ name: Update ReleaseTag
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 19 * * *'
-    
+    - cron: "0 19 * * *"
+
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       # 获取latest release tag，cut切割无关内容。和仓库中LocalReleaseTag对比，之后输出tag给之后的步骤
       - name: Set Version
         id: set-version
         run: |
-          TAG=$(wget --no-check-certificate -qO- https://api.github.com/repos/qbittorrent/qBittorrent/tags | grep 'name' | cut -d\" -f4 | head -1 | cut -c 9- )
+          TAG=$(wget --no-check-certificate -qO- https://api.github.com/repos/userdocs/qbittorrent-nox-static/tags | grep 'name' | cut -d\" -f4 | head -1 | cut -c 9- )
 
           OnlineReleaseTag=${TAG}
           LocalReleaseTag=$(cat ReleaseTag | head -n1)
